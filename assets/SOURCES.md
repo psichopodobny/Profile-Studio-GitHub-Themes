@@ -1,9 +1,8 @@
 # Artwork sources
 
-The current artwork uses the user's supplied Tokyo Ghoul frames. The user selected the references and requested an original-image composition rather than generated characters.
+The current personal header uses one user-supplied Tokyo Ghoul portrait, codex-clipboard-a5189fee-8e25-4ae3-a410-652ee9bd2c57.png. It is monochrome, paired with typography and a subtle animated line. The footer is typographic SVG and contains no character image. The lily-field frame has been removed from the displayed personal profile.
 
-- Arima looking over his shoulder: user attachment codex-clipboard-4a26f1f9-cca5-4e79-a1d9-822f94c093b3.png.
-- Arima among white lilies: user attachment codex-clipboard-01802bcc-4f42-47bb-add7-9eb8b9af9706.png.
+- Arima portrait: user attachment codex-clipboard-a5189fee-8e25-4ae3-a410-652ee9bd2c57.png.
 - K-ON! illustration: uikoll/uikoll/k-on.jfif, https://github.com/uikoll/uikoll/blob/main/k-on.jfif.
 - Yui illustration: user attachment codex-clipboard-374a2290-9841-44ae-811b-725098c1b8f0.png.
 - uikole avatar: original public GitHub avatar, preserved in color.

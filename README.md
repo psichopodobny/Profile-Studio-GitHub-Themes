@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/arima-header.gif" width="100%" alt="psichopodobny - Арима Кишо и белые лилии">
+  <img src="./assets/arima-header-v2.gif" width="100%" alt="psichopodobny - монохромный портрет Аримы Кишо">
   <br><br>
   <img src="./assets/welcome.gif" width="100%" alt="Добро пожаловать в мой профиль">
   <p>Я <strong>psichopodobny</strong>. Здесь мои проекты, инструменты и исследования.</p>
@@ -28,7 +28,6 @@ alias      psichopodobny
 code       C# / C++ / Rust / Python
 focus      reverse engineering, game tools, automation
 research   OSINT / GEOINT / HUMINT
-off-duty   Dota 2 / VALORANT / Rust / GTA 5 RP - Majestic
 ```
 
 Мне интересно разбирать логику программ, наблюдать за их поведением и собирать собственные инструменты. Могу надолго залипнуть в разбор софта или в задачу, которую хочется автоматизировать. Мне нравится, когда из такого разбора получается что-то, чем можно пользоваться.
@@ -167,12 +166,6 @@ off-duty   Dota 2 / VALORANT / Rust / GTA 5 RP - Majestic
 
 <br>
 
-## вне кода
-
-Играю в **Dota 2**, **VALORANT**, **Rust** и **GTA 5 RP на Majestic**. Иногда хочется просто зайти с напарником в игру и переключиться после кода.
-
-<br>
-
 ## uikole / мой напарник по коду
 
 **[uikole](https://github.com/uikoll)** - мой напарник по коду. Нам обоим по **16 лет**. Пишет на **C#**, **C++**, **Rust** и **Python**, делает игровые инструменты, читы для **Minecraft** и **Rust**, утилиты и софт для автоматизации.
@@ -196,5 +189,5 @@ off-duty   Dota 2 / VALORANT / Rust / GTA 5 RP - Majestic
 <br>
 
 <a href="https://github.com/psichopodobny?tab=repositories">
-  <img src="./assets/arima-footer.webp" width="100%" alt="Спасибо, что заглянул. Заглядывай в мои репозитории.">
+  <img src="./assets/repository-link.svg" width="100%" alt="Дальше - мои проекты">
 </a>
