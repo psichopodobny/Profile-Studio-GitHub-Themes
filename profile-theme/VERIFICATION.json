@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "browser": "151.0.7922.34",
+  "checks": [
+    "MV3 loads real content scripts, CSS and original 1080px portrait; native navigation remains visible",
+    "pointer parallax and viewport-triggered text reveal",
+    "native view restoration, popup controls and live storage preferences",
+    "shared page has two readable names; original K-ON art remains in color",
+    "SPA navigation, remount after main replacement, no duplicate theme roots",
+    "repository listings and the source repository remain untouched",
+    "390px mobile layout has no horizontal overflow",
+    "system reduced-motion preference respected on first load"
+  ],
+  "pageErrors": [],
+  "fixtureOnly": true,
+  "unitTests": 2,
+  "livePublicPages": [
+    {
+      "page": "personal",
+      "status": 200,
+      "inMain": true,
+      "cssLoaded": true,
+      "missingImages": [],
+      "mainTop": 72
+    },
+    {
+      "page": "shared",
+      "status": 200,
+      "inMain": true,
+      "cssLoaded": true,
+      "missingImages": [],
+      "mainTop": 72
+    }
+  ]
+}

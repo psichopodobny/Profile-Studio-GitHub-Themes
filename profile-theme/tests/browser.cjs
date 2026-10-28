@@ -1,0 +1,124 @@
+// Isolated browser fixture: no real GitHub login, cookies, account changes, or extension installation in the user's browser.
+const {chromium} = require('playwright');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const base = path.resolve(__dirname,'..');
+const extension = path.join(base,'extension');
+const artifacts = path.join(base,'test-results');
+const fixture = '<!doctype html><html><head><meta charset="utf-8"><title>GitHub fixture</title><style>body{margin:0;font-family:Arial;background:#0d1117;color:white}header.native{padding:22px 40px;background:#010409;border-bottom:1px solid #30363d}main{min-height:100vh}#original{padding:45px}</style></head><body><header class="native">GitHub &nbsp; / &nbsp; psichopodobny</header><main><div id="original"><h1>Original GitHub content</h1><a href="/">Native navigation</a></div></main></body></html>';
+const profile = 'https://github.com/psichopodobny';
+const shared = profile+'/psichopodobny-and-uikole';
+const checks = [];
+async function main() {
+  fs.mkdirSync(artifacts,{recursive:true});
+  const userDir = fs.mkdtempSync(path.join(os.tmpdir(),'pc-winter-test-'));
+  const context = await chromium.launchPersistentContext(userDir, {
+    channel:'chromium', headless:true, viewport:{width:1440,height:1000},
+    args:[`--disable-extensions-except=${extension}`,`--load-extension=${extension}`]
+  });
+  try {
+    await context.route('https://github.com/**', route => route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:fixture}));
+    const page = await context.newPage();
+    const errors=[];
+    page.on('pageerror',e=>errors.push(e.message));
+    const root = page.locator('#pc-theme-root');
+    const view = page.locator('.winter-view');
+    async function capture(name) {
+      await page.bringToFront();
+      for (const item of await page.locator('.reveal').all()) {
+        await item.scrollIntoViewIfNeeded();
+        await page.waitForFunction(node=>node.classList.contains('visible'), await item.elementHandle());
+        await page.waitForTimeout(200);
+      }
+      await page.evaluate(()=>window.scrollTo(0,0));
+      await page.waitForTimeout(1000);
+      await page.screenshot({path:path.join(artifacts,name),fullPage:true});
+    }
+    await page.goto(profile);
+    await root.waitFor();
+    await page.waitForFunction(()=>document.querySelector('#pc-theme-root').shadowRoot.querySelector('link').sheet !== null);
+    await page.waitForTimeout(1500);
+    assert.equal(await page.locator('#original').isVisible(),false);
+    assert.equal(await page.locator('header.native').isVisible(),true);
+    assert.equal(await view.getAttribute('data-motion'),'true');
+    assert.equal(await page.locator('.portrait img').evaluate(n=>n.naturalWidth),1080);
+    const imageErrors=await page.locator('#pc-theme-root').evaluate(n=>[...n.shadowRoot.querySelectorAll('img')].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src));
+    assert.deepEqual(imageErrors,[]);
+    checks.push('MV3 loads real content scripts, CSS and original 1080px portrait; native navigation remains visible');
+    await page.mouse.move(1200,700);
+    await page.waitForTimeout(100);
+    const px=await view.evaluate(n=>n.style.getPropertyValue('--parallax-x'));
+    assert.ok(px && Number.parseFloat(px)>0);
+    await page.locator('#pc-work').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(900);
+    assert.ok((await page.locator('#pc-work').evaluate(n=>n.closest('.section').className)).includes('visible'));
+    checks.push('pointer parallax and viewport-triggered text reveal');
+    await page.evaluate(()=>window.scrollTo(0,0));
+    await capture('personal-desktop.png');
+    // Disable through the view and re-enable through the actual extension popup.
+    const popupURL = await root.evaluate(n=>new URL(n.shadowRoot.querySelector('link').href).origin+'/popup.html');
+    await page.getByRole('button',{name:'Обычный GitHub ↗'}).click();
+    await root.waitFor({state:'detached'});
+    assert.equal(await page.locator('#original').isVisible(),true);
+    assert.equal(await page.locator('html').getAttribute('data-pc-theme'),null);
+    const popup=await context.newPage();
+    await popup.goto(popupURL);
+    assert.equal(await popup.locator('#enabled').isChecked(),false);
+    await popup.locator('#enabled').check();
+    await root.waitFor();
+    await popup.locator('#motion').uncheck();
+    await page.waitForFunction(()=>document.querySelector('#pc-theme-root').shadowRoot.querySelector('.winter-view').dataset.motion==='false');
+    await popup.locator('#snow').uncheck();
+    await page.waitForFunction(()=>document.querySelector('#pc-theme-root').shadowRoot.querySelector('.winter-view').dataset.snow==='false');
+    assert.equal(await page.locator('.snow').isVisible(),false);
+    checks.push('native view restoration, popup controls and live storage preferences');
+    await popup.locator('#motion').check(); await popup.locator('#snow').check();
+    await page.goto(shared); await root.waitFor();
+    await page.waitForTimeout(1700);
+    assert.equal(await page.locator('.duo-half').count(),2);
+    assert.equal(await page.locator('.uiko-half img').evaluate(n=>getComputedStyle(n).filter),'none');
+    assert.equal(await page.locator('.uiko-half img').evaluate(n=>n.naturalWidth),1920);
+    assert.match(await page.locator('.duo-caption').first().textContent(),/psichopodobny/);
+    await capture('shared-desktop.png');
+    checks.push('shared page has two readable names; original K-ON art remains in color');
+    // SPA leave / return / replaced main: originals must never get lost.
+    await page.evaluate(()=>{history.pushState({},'', '/psichopodobny?tab=repositories');window.dispatchEvent(new Event('turbo:load'));});
+    await root.waitFor({state:'detached'});
+    assert.equal(await page.locator('#original').isVisible(),true);
+    await page.evaluate(()=>{history.pushState({},'', '/psichopodobny');window.dispatchEvent(new Event('turbo:render'));});
+    await root.waitFor();
+    await page.evaluate(()=>{const m=document.createElement('main');m.innerHTML='<div id="new-original">Replaced main</div>';document.querySelector('main').replaceWith(m);});
+    await root.waitFor();
+    assert.equal(await page.locator('#pc-theme-root').count(),1);
+    await page.getByRole('button',{name:'Обычный GitHub ↗'}).click();
+    await root.waitFor({state:'detached'});
+    assert.equal(await page.locator('#new-original').isVisible(),true);
+    checks.push('SPA navigation, remount after main replacement, no duplicate theme roots');
+    await popup.waitForFunction(()=>!document.getElementById('enabled').checked);
+    await popup.locator('#enabled').check();
+    await page.goto(profile+'?tab=repositories');
+    await page.waitForTimeout(500);
+    assert.equal(await root.count(),0);
+    await page.goto(profile+'/psichopodobny'); await page.waitForTimeout(500);
+    assert.equal(await root.count(),0);
+    checks.push('repository listings and the source repository remain untouched');
+    await page.setViewportSize({width:390,height:844});
+    await page.goto(profile); await root.waitFor(); await page.waitForTimeout(1500);
+    const overflow=await view.evaluate(n=>n.scrollWidth>n.clientWidth+1);
+    assert.equal(overflow,false,'mobile horizontal overflow');
+    await capture('personal-mobile.png');
+    checks.push('390px mobile layout has no horizontal overflow');
+    await popup.evaluate(()=>chrome.storage.local.clear());
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.reload(); await root.waitFor();
+    assert.equal(await view.getAttribute('data-motion'),'false');
+    assert.equal(await page.locator('.snow').isVisible(),false);
+    checks.push('system reduced-motion preference respected on first load');
+    assert.deepEqual(errors,[]);
+    fs.writeFileSync(path.join(artifacts,'verification.json'),JSON.stringify({browser:await context.browser().version(),checks,pageErrors:errors,fixtureOnly:true},null,2));
+    console.log(JSON.stringify({passed:checks.length,checks,artifacts},null,2));
+  } finally { await context.close(); }
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

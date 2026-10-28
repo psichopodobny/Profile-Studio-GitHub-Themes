@@ -1,0 +1,5 @@
+html[data-pc-theme="on"] { color-scheme: dark; }
+html[data-pc-theme="on"] body { background: #0a0d10 !important; }
+html[data-pc-theme="on"] main[data-pc-main] { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+html[data-pc-theme="on"] main[data-pc-main] > :not(#pc-theme-root) { display: none !important; }
+#pc-theme-root { display: block; position: relative; isolation: isolate; width: 100%; min-height: 100vh; }

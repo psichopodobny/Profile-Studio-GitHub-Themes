@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="#проекты">проекты</a> &nbsp; / &nbsp;
+  <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme">кастомный профиль ↗</a> &nbsp; / &nbsp;
   <a href="#инструменты-для-реверса">инструменты</a> &nbsp; / &nbsp;
   <a href="https://github.com/psichopodobny/psichopodobny-and-uikole">psichopodobny and uikole ↗</a>
 </p>
