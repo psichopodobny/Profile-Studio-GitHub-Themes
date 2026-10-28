@@ -1,5 +1,7 @@
 # Winter Profile
 
+**Firefox:** подготовлена [отдельная сборка для публикации в Mozilla](./FIREFOX.md). Она пока не подписана; обычная установка по кнопке ещё не опубликована. Инструкция ниже относится к Chrome / Edge.
+
 Расширение для оформления **любого личного GitHub-профиля** в Chrome и Edge. Живой фон, рамка аватара, цвет акцента и анимация при прокрутке.
 
 [**Скачать расширение v1.1.0**](https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.1.0.zip)

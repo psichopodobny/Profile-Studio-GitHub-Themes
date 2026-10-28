@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "Winter Profile - GitHub Themes",
+  "version": "1.1.1",
+  "description": "Живой зимний фон, рамка аватара и оформление любого личного GitHub-профиля. Автор: psichopodobny.",
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "media/icon-16.png",
+    "48": "media/icon-48.png",
+    "128": "media/icon-128.png"
+  },
+  "action": {
+    "default_title": "Winter Profile",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "options.js",
+        "scope.js",
+        "view.js",
+        "controller.js",
+        "content.js"
+      ],
+      "css": [
+        "host.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "theme.css",
+        "media/arima-tie.png",
+        "media/profile-avatar.png",
+        "media/winter-forest.png",
+        "media/winter-lake.png",
+        "media/k-on-original.jpg"
+      ],
+      "matches": [
+        "https://github.com/*"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "winter-profile@psichopodobny",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "host_permissions": [
+    "https://github.com/*"
+  ]
+}

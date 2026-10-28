@@ -1,0 +1,25 @@
+{
+  "count": 0,
+  "summary": {
+    "errors": 0,
+    "notices": 0,
+    "warnings": 0
+  },
+  "metadata": {
+    "id": "winter-profile@psichopodobny",
+    "manifestVersion": 3,
+    "name": "Winter Profile - GitHub Themes",
+    "type": 1,
+    "version": "1.1.1",
+    "firefoxMinVersion": "140.0",
+    "firefoxStrictMinVersion": 140,
+    "experimentApiPaths": {},
+    "totalScannedFileSize": 30732,
+    "emptyFiles": [],
+    "jsLibs": {},
+    "unknownMinifiedFiles": []
+  },
+  "errors": [],
+  "notices": [],
+  "warnings": []
+}

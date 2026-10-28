@@ -1,0 +1,8 @@
+WINTER PROFILE / FIREFOX 1.1.1
+
+Эта сборка подготовлена для отправки в Mozilla Add-ons.
+Она пока НЕ подписана и не является файлом для обычной постоянной установки.
+Для распространения через кнопку нужно сначала получить подпись Mozilla.
+Менеджер дополнений Firefox: about:addons.
+Публикация: https://addons.mozilla.org/developers/addon/submit/distribution
+Исходники: https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme

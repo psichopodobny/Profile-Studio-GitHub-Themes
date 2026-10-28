@@ -1,0 +1,11 @@
+{
+  "version": "1.1.1",
+  "addonId": "winter-profile@psichopodobny",
+  "status": "prepared_not_submitted",
+  "submittedToMozilla": false,
+  "signed": false,
+  "signedAddonUrl": null,
+  "mozillaLinter": {"version": "10.15.0", "errors": 0, "warnings": 0},
+  "firefoxApiUnitTests": 2,
+  "firefoxRuntimeTested": false
+}

@@ -1,4 +1,6 @@
 <p align="center">
+  <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/FIREFOX.md"><strong>Firefox: сборка готова, публикация Mozilla ещё не завершена ↗</strong></a>
+  <br>
   <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.1.0.zip"><img src="./assets/download-extension.svg" width="100%" alt="Скачать расширение Winter Profile v1.1.0"></a>
   <br>
   <sub>Chrome / Edge · <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme">как установить</a> · оформление любого личного GitHub-профиля</sub>
