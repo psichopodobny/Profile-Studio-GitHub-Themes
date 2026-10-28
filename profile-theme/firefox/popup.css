@@ -2,3 +2,4 @@
 select {max-width:150px;padding:5px;border:1px solid #d3e0eb30;border-radius:4px;background:#111b23;font:11px "Segoe UI",sans-serif;color:#d4e0e9;}
 input[type="color"] {width:38px;height:25px;border:1px solid #d3e0eb30;padding:2px;background:#111b23;}
 .file-label {display:block;font-size:11px;color:#aabbc8;}.file-label input {display:block;width:100%;height:auto;margin-top:8px;font-size:10px;}
+.profile-picker,.sharing {display:flex;gap:8px;align-items:center;margin:9px 0;}.profile-picker input {width:180px;min-width:0;height:32px;padding:6px 8px;font:12px "Segoe UI",sans-serif;border:1px solid #d3e0eb30;border-radius:4px;background:#101820;color:#e2ebf2;}.profile-picker button,.sharing button {margin:0;padding:8px;}.profile-picker button {width:auto;flex:1;}.sharing button {flex:1;}#scope-note {margin:5px 0 15px;font-size:10px;}

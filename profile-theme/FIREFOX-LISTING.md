@@ -14,6 +14,8 @@ Winter Profile добавляет живой зимний фон и оформл
 
 Настройки доступны через значок расширения: зимний лес или туманное озеро, собственное изображение для фона, цвет акцента и шрифт заголовков. Можно отдельно отключить движение и снег или вернуть обычный GitHub. Учитывается системная настройка уменьшения движения.
 
+Можно настроить общий вид всех профилей или отдельную тему для выбранного ника. Оформление сохраняется в файл JSON и загружается у другого пользователя. В файл входят параметры и активная картинка; список профилей и данные аккаунта не экспортируются.
+
 Настройки действуют только в браузере пользователя. Изменения не записываются в аккаунты GitHub и не публикуются от имени владельцев просматриваемых профилей. На двух страницах автора доступна отдельная компоновка: psichopodobny и общий репозиторий psichopodobny and uikole.
 
 Нет аналитики, внешних скриптов, запросов к API или доступа к cookies и токенам. Настройки и загруженный фон остаются в локальном хранилище браузера.
@@ -32,5 +34,7 @@ This extension styles personal GitHub profile pages. Test any public individual 
 The author profile github.com/psichopodobny and the shared repository github.com/psichopodobny/psichopodobny-and-uikole use a separate packaged layout. The native DOM is kept and is restored with the Ordinary GitHub button.
 
 Use the action popup to change background preset, upload a local image, change accent/font, disable motion/snow and reset settings. Local uploads are converted to a static WebP image and stored in browser.storage.local. No network upload is made. Reduced motion is respected.
+
+The popup can apply appearance globally or to a manually selected profile. The current profile nickname is read through an internal content-script message, with no tab URL or history collection. Local per-profile settings inherit global defaults. Theme export/import uses a restricted JSON schema, includes only appearance and the active background image, and never executes user-provided scripts or CSS. The saved profile map and master enabled flag are excluded from exports.
 
 Source files are readable and packaged directly; no compilation, minification, bundler, background script or remote executable code is used. All illustration resources are packaged. The local addons-linter 10.15.0 report has zero errors and warnings. Firefox manifest/API unit checks pass; production Firefox runtime testing has not yet been performed. No login or test credentials are needed to view public profiles.

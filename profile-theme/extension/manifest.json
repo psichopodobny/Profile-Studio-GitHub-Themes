@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Winter Profile - GitHub Themes",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Живой зимний фон, рамка аватара и оформление любого личного GitHub-профиля. Автор: psichopodobny.",
   "permissions": ["storage"],
   "icons": {"16": "media/icon-16.png", "48": "media/icon-48.png", "128": "media/icon-128.png"},

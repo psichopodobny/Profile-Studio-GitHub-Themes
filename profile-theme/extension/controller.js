@@ -3,7 +3,9 @@
   function start({window: win, document: doc, storage, asset, routeFor, createView}) {
     const media = win.matchMedia('(prefers-reduced-motion: reduce)');
     const options = root.PCWinterOptions;
-    let preferences = options.normalize({}, !media.matches);
+    let state = options.normalizeState({}, !media.matches);
+    const login = () => options.loginFor(win.location.pathname.split('/')[1]);
+    let preferences = options.effective(state,login(),!media.matches);
     let ready = false, disposed = false, scheduled = false, mounting = false, current = null;
     const listeners = ['turbo:load', 'turbo:render', 'pjax:end', 'popstate'];
     function unmount() {
@@ -21,12 +23,17 @@
     }
     async function preference(key, value) {
       if (!options.keys.includes(key)) return;
-      preferences = options.normalize({...preferences, [key]: value}, !media.matches);
+      const name = login();
+      const target = name && Object.hasOwn(state.profiles,name) ? name : null;
+      const changes = key === 'enabled' ? {enabled:value} : options.appearanceChanges(state,target,{[key]:value});
+      state = options.normalizeState({...state,...changes},!media.matches);
+      preferences = options.effective(state,name,!media.matches);
       sync();
-      try { await storage.set({[key]: value}); } catch { /* Current tab still responds when extension storage is unavailable. */ }
+      try { await storage.set(changes); } catch { /* Current tab still responds when extension storage is unavailable. */ }
     }
     function sync() {
       if (disposed || !ready || mounting) return;
+      preferences = options.effective(state,login(),!media.matches);
       const route = routeFor(win.location.href);
       const main = doc.querySelector('main') || doc.querySelector('[role="main"]');
       const native = route === 'profile';
@@ -78,13 +85,13 @@
     observer.observe(doc.documentElement, {childList: true, subtree: true});
     listeners.forEach(name => win.addEventListener(name, schedule));
     const stopStorage = storage.subscribe(changes => {
-      preferences = options.normalize({...preferences, ...changes}, !media.matches);
+      state = options.normalizeState({...state, ...changes}, !media.matches);
       schedule();
     });
     const loaded = (async () => {
       try {
-        const saved = await storage.get(options.keys);
-        preferences = options.normalize(saved, !media.matches);
+        const saved = await storage.get(options.storageKeys);
+        state = options.normalizeState(saved, !media.matches);
       } catch { /* Defaults are intentionally usable without saved preferences. */ }
       ready = true;
       sync();

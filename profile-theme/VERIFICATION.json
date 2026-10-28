@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "browser": "151.0.7922.34",
   "checks": [
     "MV3 loads real content scripts, CSS and original 1080px portrait; native navigation remains visible",
@@ -10,11 +10,12 @@
     "repository pages and pages without the personal-profile marker remain untouched",
     "390px mobile layout has no horizontal overflow",
     "system reduced-motion preference respected on first load",
+    "per-profile themes persist without altering other profiles; export/import round trips and rejects executable settings",
     "generic profiles preserve native content, support presets/local uploads/accent/font/reset, and ignore non-profile pages"
   ],
   "pageErrors": [],
   "fixtureOnly": true,
-  "unitTests": 3,
+  "unitTests": 6,
   "livePublicPages": [
     {
       "page": "personal",
@@ -23,7 +24,7 @@
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
-      "mainTop": 72
+      "mainTop": 68
     },
     {
       "page": "shared",
@@ -32,7 +33,7 @@
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
-      "mainTop": 72
+      "mainTop": 68
     },
     {
       "page": "octocat",
@@ -41,7 +42,7 @@
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
-      "mainTop": 72
+      "mainTop": 68
     },
     {
       "page": "realtenzo",
@@ -50,7 +51,7 @@
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
-      "mainTop": 72
+      "mainTop": 68
     }
   ]
 }

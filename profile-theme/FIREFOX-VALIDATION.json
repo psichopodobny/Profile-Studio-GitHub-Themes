@@ -10,11 +10,11 @@
     "manifestVersion": 3,
     "name": "Winter Profile - GitHub Themes",
     "type": 1,
-    "version": "1.1.1",
+    "version": "1.2.0",
     "firefoxMinVersion": "140.0",
     "firefoxStrictMinVersion": 140,
     "experimentApiPaths": {},
-    "totalScannedFileSize": 30732,
+    "totalScannedFileSize": 41090,
     "emptyFiles": [],
     "jsLibs": {},
     "unknownMinifiedFiles": []

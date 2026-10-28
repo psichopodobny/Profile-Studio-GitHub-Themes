@@ -120,7 +120,7 @@
       el('p', {}, 'Работаем над общими задачами и собственными проектами. Реверс-инжиниринг и GEOINT веду со своей стороны.'),
       link('Наша общая страница ↗', SHARED, 'text-link'));
     stage.append(section('pc-team', '04 / TOGETHER', 'Совместная работа', team));
-    stage.append(el('footer', {class: 'footer'}, link('psichopodobny', BASE + 'psichopodobny'), el('span', {}, 'Winter Profile / 1.1'), link('Исходники ↗', SOURCE)));
+    stage.append(el('footer', {class: 'footer'}, link('psichopodobny', BASE + 'psichopodobny'), el('span', {}, 'Winter Profile / 1.2'), link('Исходники ↗', SOURCE)));
     frame.append(el('div', {class: 'layout ' + (route === 'duo' ? 'layout-duo' : '')}, identity, stage));
     function update(next) {
       preferences = next;

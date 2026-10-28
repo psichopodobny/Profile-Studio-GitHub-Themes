@@ -1,0 +1,13 @@
+{
+  "format": "winter-profile-theme",
+  "version": 1,
+  "name": "Winter Profile",
+  "appearance": {
+    "motion": true,
+    "snow": true,
+    "background": "forest",
+    "customBackground": "",
+    "accent": "#d0e0ed",
+    "font": "system"
+  }
+}

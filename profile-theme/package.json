@@ -1,7 +1,7 @@
 {
   "name": "psichopodobny-winter-profile",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
-  "scripts": {"test": "node --test tests/scope.test.cjs && node tests/browser.cjs", "test:firefox": "node --test tests/firefox.test.cjs"},
+  "scripts": {"test": "node --test tests/scope.test.cjs tests/themes.test.cjs && node tests/browser.cjs", "test:firefox": "node --test tests/firefox.test.cjs tests/themes.test.cjs"},
   "devDependencies": {"playwright": "1.62.1"}
 }

@@ -2,7 +2,7 @@
 
 **Статус: сборка подготовлена, но ещё не отправлена в Mozilla и не подписана. Установка по кнопке пока не опубликована.**
 
-[**Скачать архив для публикации 1.1.1**](https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-firefox-v1.1.1-unsigned.zip)
+[**Скачать архив для публикации 1.2.0**](https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-firefox-v1.2.0-unsigned.zip)
 
 Это архив для загрузки в магазин, а не готовый подписанный установщик. Обычный Firefox требует подпись Mozilla. После публикации появится страница с кнопкой **Добавить в Firefox** и стандартным подтверждением браузера. [Правила подписи Mozilla](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/).
 
@@ -10,7 +10,7 @@
 
 1. Открой [отправку дополнения в Mozilla](https://addons.mozilla.org/developers/addon/submit/distribution) в Firefox и войди в свой Mozilla Account.
 2. Выбери **On this site** для публичного размещения в Firefox Add-ons.
-3. Загрузи архив **psichopodobny-winter-firefox-v1.1.1-unsigned.zip** по ссылке выше.
+3. Загрузи архив **psichopodobny-winter-firefox-v1.2.0-unsigned.zip** по ссылке выше.
 4. Используй готовые [название, описание и заметки для проверяющего](./FIREFOX-LISTING.md). При выборе платформ укажи Firefox для компьютера; мобильная версия не проверена.
 5. Отправь дополнение и дождись обработки Mozilla. Страница опубликованного дополнения даст обычную кнопку установки.
 
@@ -24,6 +24,7 @@
 - Использование Firefox API `browser` с сохранением поддержки общей логики расширения.
 - Локальная проверка **Mozilla Add-ons Linter 10.15.0**: **0 ошибок, 0 предупреждений**. [Полный отчёт](./FIREFOX-VALIDATION.json).
 - Две проверки пакета и работы Firefox API без зависимости от Chrome.
+- Отдельные настройки для выбранных ников, экспорт и импорт файлов тем. Импорт не выполняет код и не передаёт настройки других профилей.
 - [Полные исходники Firefox-сборки](./firefox). Внутри ZIP те же файлы, без обфускации и внешних скриптов.
 
 Статическая проверка не заменяет подпись, рассмотрение Mozilla или реальную проверку работы в Firefox. Сборка ещё не проверена в работающем Firefox. Настройки и выбранный фон хранятся локально; данные не отправляются автору.

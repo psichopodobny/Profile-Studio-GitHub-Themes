@@ -64,6 +64,7 @@ async function main() {
     assert.equal(await page.locator('#original').isVisible(),true);
     assert.equal(await page.locator('html').getAttribute('data-pc-theme'),null);
     const popup=await context.newPage();
+    popup.on('pageerror',error=>errors.push('Popup: '+error.message));
     await popup.goto(popupURL);
     assert.equal(await popup.locator('#enabled').isChecked(),false);
     await popup.locator('#enabled').check();
@@ -119,7 +120,7 @@ async function main() {
     // Generic profile: preserve native identity, biography, README, repository cards and links.
     await page.emulateMedia({reducedMotion:'no-preference'});
     const genericFixture=fixture.replace('<div id="original">','<div id="original"><div class="h-card"><div class="vcard-names"><span class="p-name">Demo Developer</span><span class="p-nickname">demo-dev</span></div><p class="p-note">Original public bio</p><img class="avatar-user width-full" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Demo avatar"></div><article class="markdown-body"><h2>My original README</h2><p>Keep this text unchanged.</p></article><div class="pinned-item-list-item"><a id="native-repo" href="/demo-dev/original-project">original-project</a></div>');
-    await context.route('https://github.com/demo-dev*',route=>route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:genericFixture}));
+    await context.route('https://github.com/demo-*',route=>route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:genericFixture.replaceAll('demo-dev',new URL(route.request().url()).pathname.slice(1))}));
     await page.goto('https://github.com/demo-dev');await root.waitFor();
     assert.equal(await page.locator('html').getAttribute('data-pc-theme'),'native');
     assert.equal(await page.locator('#original').isVisible(),true);
@@ -150,6 +151,39 @@ async function main() {
     await page.waitForFunction(()=>document.querySelector('#pc-theme-root').shadowRoot.querySelector('nav a').getAttribute('href')==='https://github.com/demo-next');
     assert.equal(await root.count(),1);
     assert.equal(await page.locator('.p-nickname').textContent(),'demo-next');
+    await page.bringToFront();
+    const detected=await popup.evaluate(async()=>{const [tab]=await chrome.tabs.query({active:true,currentWindow:true});return chrome.tabs.sendMessage(tab.id,{type:'winter-profile-context'});});
+    assert.equal(detected.login,'demo-next');
+    await popup.bringToFront();
+    await popup.locator('#profile-login').fill('demo-next');await popup.locator('#select-profile').click();
+    assert.equal(await popup.locator('#scope').inputValue(),'profile');
+    await popup.locator('#accent').fill('#bb88dd');await popup.locator('#accent').dispatchEvent('change');
+    await popup.locator('#font').selectOption('serif');
+    await page.waitForFunction(()=>document.querySelector('main').style.getPropertyValue('--pc-accent')==='#bb88dd');
+    const scoped=await popup.evaluate(()=>chrome.storage.local.get(['accent','profiles']));
+    assert.equal(scoped.accent,'#d0e0ed');assert.equal(scoped.profiles['demo-next'].accent,'#bb88dd');
+    await page.goto('https://github.com/demo-other');await root.waitFor();
+    assert.equal(await page.locator('main').evaluate(n=>n.style.getPropertyValue('--pc-accent')),'#d0e0ed');
+    await page.goto('https://github.com/demo-next');await root.waitFor();
+    assert.equal(await page.locator('main').evaluate(n=>n.style.getPropertyValue('--pc-accent')),'#bb88dd');
+    await popup.bringToFront();
+    const downloading=popup.waitForEvent('download');await popup.locator('#export').click();const downloaded=await downloading;
+    const themeFile=await downloaded.path(),themeContents=fs.readFileSync(themeFile,'utf8');
+    assert.equal(JSON.parse(themeContents).appearance.font,'serif');assert.doesNotMatch(themeContents,/demo-next|profiles|enabled/);
+    await popup.locator('#profile-login').fill('demo-other');await popup.locator('#select-profile').click();
+    await popup.locator('#import-file').setInputFiles(themeFile);
+    await popup.waitForFunction(()=>document.getElementById('status').textContent.startsWith('Загружена тема:'));
+    const imported=await popup.evaluate(()=>chrome.storage.local.get(['accent','profiles']));
+    assert.equal(imported.accent,'#d0e0ed');assert.equal(imported.profiles['demo-other'].accent,'#bb88dd');
+    const invalid=Buffer.from(JSON.stringify({format:'winter-profile-theme',version:1,appearance:{css:'body{display:none}'}}));
+    await popup.locator('#import-file').setInputFiles({name:'unsafe.json',mimeType:'application/json',buffer:invalid});
+    await popup.waitForFunction(()=>document.getElementById('status').textContent.includes('неподдерживаемые'));
+    assert.deepEqual(await popup.evaluate(()=>chrome.storage.local.get(['accent','profiles'])),imported);
+    await popup.getByRole('button',{name:'Вернуть общее оформление для @demo-other'}).click();
+    await popup.waitForFunction(()=>document.getElementById('status').textContent==='Профиль использует общее оформление.');
+    const reset=await popup.evaluate(()=>chrome.storage.local.get('profiles'));assert.ok(reset.profiles['demo-next']);assert.equal(reset.profiles['demo-other'],undefined);
+    await popup.setViewportSize({width:380,height:1000});await popup.screenshot({path:path.join(artifacts,'theme-settings.png'),fullPage:true});
+    checks.push('per-profile themes persist without altering other profiles; export/import round trips and rejects executable settings');
     // Similar-looking organization/system pages without the personal-profile marker must not change.
     await page.goto('https://github.com/example-org');await page.waitForTimeout(300);assert.equal(await root.count(),0);
     checks.push('generic profiles preserve native content, support presets/local uploads/accent/font/reset, and ignore non-profile pages');
