@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="./assets/arima-header-v3.gif" width="100%" alt="psichopodobny - анимированный монохромный баннер с Аримой Кишо">
+  <img src="./assets/winter-night-header.svg" width="100%" alt="psichopodobny - Арима Кишо, зимняя ночь и заснеженный двор">
   <br><br>
-  <img src="./assets/welcome-v2.gif" width="100%" alt="Добро пожаловать в мой профиль">
+  <img src="./assets/winter-welcome.svg" width="100%" alt="Добро пожаловать в мой профиль">
   <p>Разработка ПО / реверс-инжиниринг / OSINT</p>
   <br>
   <code>C#</code> &nbsp; <code>C++</code> &nbsp; <code>Rust</code> &nbsp; <code>Python</code>

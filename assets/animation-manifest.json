@@ -1,0 +1,11 @@
+{
+  "primary": ["winter-night-header.svg", "winter-welcome.svg"],
+  "gifCopies": ["winter-night-header.gif", "winter-welcome.gif"],
+  "cycleSeconds": 8,
+  "nativeSnowStepsPerSecond": 60,
+  "nativePlayback": "browser and display dependent",
+  "gifMovingFrameDelayMs": 20,
+  "gifNominalFps": 50,
+  "endpointMaxPixelDifference": 0,
+  "cameraMotion": false
+}
