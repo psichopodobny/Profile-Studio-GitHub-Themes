@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/FIREFOX.md"><strong>Firefox: сборка готова, публикация Mozilla ещё не завершена ↗</strong></a>
+  <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/WinterProfile-Setup.exe"><img src="./assets/download-windows.svg" width="100%" alt="Скачать Windows-помощник установки Winter Profile (.exe)"></a>
   <br>
-  <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.2.0.zip"><img src="./assets/download-extension.svg" width="100%" alt="Скачать расширение Winter Profile v1.2.0"></a>
+  <sub>Windows 10 / 11 · <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/WINDOWS.md">как работает помощник</a> · <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.2.0.zip">ZIP для Chrome / Edge</a></sub>
   <br>
-  <sub>Chrome / Edge · <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme">как установить</a> · оформление любого личного GitHub-профиля</sub>
+  <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/FIREFOX.md"><sub>Firefox: ожидается публикация Mozilla ↗</sub></a>
 </p>
 
 <div align="center">

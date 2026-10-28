@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "extensionVersion": "1.2.0",
+  "stores": {
+    "firefox": null,
+    "chromium": null,
+    "edge": null,
+    "opera": null
+  }
+}

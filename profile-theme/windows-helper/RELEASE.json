@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "extensionVersion": "1.2.0",
+  "file": "WinterProfile-Setup.exe",
+  "bytes": 4661760,
+  "sha256": "07b28d9413f571726d33bbf9b6514772ac2701974072e2f9cdaca6e2eb9f485c",
+  "authenticodeSigned": false,
+  "selfTestChecks": 27,
+  "browserInstallationsPerformedDuringTests": 0,
+  "defaultBrowserChangedDuringTests": false
+}

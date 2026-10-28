@@ -1,0 +1,54 @@
+{
+  "success": true,
+  "checks": [
+    "quoted browser command",
+    "unquoted browser command",
+    "shell command is not a browser executable",
+    "reject non-browser launchers",
+    "allow official Mozilla listing",
+    "allow Chrome store listing",
+    "reject unsafe store address 6",
+    "reject unsafe store address 7",
+    "reject unsafe store address 8",
+    "reject unsafe store address 9",
+    "reject unsafe store address 10",
+    "reject unsafe store address 11",
+    "unsigned Firefox is a pending publication, never reported as installed",
+    "Chromium plan prepares an unpacked package",
+    "Edge opens its own extension manager",
+    "published Firefox uses normal store confirmation",
+    "Chromium archive extracted with root manifest",
+    "Chromium package contains all 22 files",
+    "identical prepared package is reused",
+    "user-edited files are preserved",
+    "replacement package is complete",
+    "Firefox publication archive keeps its hash",
+    "matching Firefox archive is reused",
+    "reject archive path traversal 23",
+    "reject archive path traversal 24",
+    "reject archive path traversal 25",
+    "reject archive path traversal 26"
+  ],
+  "detectedBrowsers": [
+    {
+      "name": "Mozilla Firefox",
+      "family": "Firefox",
+      "isDefault": true
+    },
+    {
+      "name": "Google Chrome",
+      "family": "Chromium",
+      "isDefault": false
+    },
+    {
+      "name": "Microsoft Edge",
+      "family": "Edge",
+      "isDefault": false
+    }
+  ],
+  "registryAccess": "read-only",
+  "browserLaunches": 0,
+  "defaultChanged": false,
+  "chromiumBundleSha256": "f929d74610a61f247bc9a1dd7edeb4cde179efcb70b964fff83eb8625319168f",
+  "firefoxBundleSha256": "4f4f933aecd4d4eb8e60c73d5d40ff3aaf57b7965ea57d7cb9fc627a028dfdfd"
+}
