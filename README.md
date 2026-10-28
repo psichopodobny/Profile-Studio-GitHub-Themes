@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.1.0.zip"><img src="./assets/download-extension.svg" width="100%" alt="Скачать расширение Winter Profile v1.1.0"></a>
+  <br>
+  <sub>Chrome / Edge · <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme">как установить</a> · оформление любого личного GitHub-профиля</sub>
+</p>
+
 <div align="center">
   <img src="./assets/winter-night-header.svg" width="100%" alt="psichopodobny - Арима Кишо, зимняя ночь и заснеженный двор">
   <br><br>
@@ -67,11 +73,31 @@
 </td>
 <td width="50%" valign="top">
 
-### [psichopodobny / profile](https://github.com/psichopodobny/psichopodobny)
+### [Winter Profile](https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme)
 
-<code>PUBLIC</code> &nbsp; <code>Markdown</code> &nbsp; <code>SVG</code>
+<code>PUBLIC</code> &nbsp; <code>JavaScript</code> &nbsp; <code>CSS</code>
 
-Исходники оформления профиля: Markdown, SVG и анимированные GIF-баннеры.
+Расширение для оформления любого личного GitHub-профиля: свой фон, рамка, снег и анимация.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### DeadCode
+
+<code>PRIVATE</code> &nbsp; <code>Rust</code>
+
+Чит для Rust. Приватная разработка.
+
+</td>
+<td width="50%" valign="top">
+
+### Stealer
+
+<code>PRIVATE</code> &nbsp; <code>Majestic</code>
+
+Утилита для скрытия от проверок на Majestic. Исходники закрыты.
 
 </td>
 </tr>

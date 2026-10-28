@@ -3,8 +3,10 @@
   const BASE = 'https://github.com/';
   const SHARED = BASE + 'psichopodobny/psichopodobny-and-uikole';
   const SOURCE = BASE + 'psichopodobny/psichopodobny/tree/main/profile-theme';
-  function createView({document: doc, asset, route, preferences, onPreference, onExit}) {
+  function createView({document: doc, asset, route, preferences, onPreference, onExit, profileLogin}) {
     const cleanups = [];
+    const nativeItems = new Set();
+    let nativeObserver;
     function el(tag, attrs = {}, ...children) {
       const node = doc.createElement(tag);
       for (const [key, value] of Object.entries(attrs)) {
@@ -30,9 +32,11 @@
     const toggle = (key, text) => button(text, () => onPreference(key, !preferences[key]), {
       class: 'control', 'aria-pressed': String(preferences[key]), 'data-pref': key
     });
-    const frame = el('div', {class: 'winter-view', 'data-motion': String(preferences.motion), 'data-snow': String(preferences.snow)});
+    const native = route === 'profile';
+    const frame = el('div', {class: 'winter-view' + (native ? ' native-view' : ''), 'data-motion': String(preferences.motion), 'data-snow': String(preferences.snow)});
+    const backgroundImage = el('img', {alt: '', class: 'forest'});
     const backdrop = el('div', {class: 'backdrop', 'aria-hidden': 'true'},
-      el('img', {src: asset('media/winter-forest.png'), alt: '', class: 'forest'}),
+      backgroundImage,
       el('div', {class: 'veil'}), el('div', {class: 'fog'}), el('div', {class: 'cursor-light'}));
     frame.append(backdrop);
     const snow = el('div', {class: 'snow', 'aria-hidden': 'true'});
@@ -41,10 +45,14 @@
     }
     frame.append(snow);
     const chrome = el('div', {class: 'topbar'},
-      link('p / winter', BASE + 'psichopodobny', 'wordmark'),
-      el('nav', {'aria-label': 'Разделы'}, link('Проекты', '#pc-projects'), link('Направления', '#pc-work'), link('Мы', '#pc-team')),
+      link(native ? 'Winter Profile' : 'p / winter', BASE + 'psichopodobny', 'wordmark'),
+      native ? el('nav', {'aria-label': 'Разделы профиля'}, link('Обзор', BASE + profileLogin), link('Репозитории', BASE + profileLogin + '?tab=repositories')) : el('nav', {'aria-label': 'Разделы'}, link('Проекты', '#pc-projects'), link('Направления', '#pc-work'), link('Мы', '#pc-team')),
       el('div', {class: 'controls'}, toggle('motion', 'Движение'), toggle('snow', 'Снег'), button('Обычный GitHub ↗', onExit, {class: 'control exit'})));
     frame.append(chrome);
+    if (native) {
+      update(preferences);
+      return {element:frame,update,activate,destroy,refreshNative};
+    }
     const stack = el('div', {class: 'tags'}, ['C#', 'C++', 'Rust', 'Python'].map(tag));
     const identity = el('aside', {class: 'identity', 'aria-label': 'О профиле'},
       el('div', {class: 'portrait-ring'}, el('div', {class: 'portrait'}, el('img', {src: asset(route === 'duo' ? 'media/profile-avatar.png' : 'media/arima-tie.png'), width: route === 'duo' ? '460' : '1080', height: route === 'duo' ? '460' : '1080', alt: route === 'duo' ? 'Аватар psichopodobny' : 'Арима Кишо в очках и галстуке'}))),
@@ -82,7 +90,9 @@
       ['01', 'Vortex-client', 'Клиентский проект с закрытыми исходниками.', ['PRIVATE'], null],
       ['02', 'konspektik', 'Органайзер для учёбы: расписание, конспекты, формулы и заметки. Работает офлайн, устанавливается на Android как PWA.', ['PRIVATE', 'PWA', 'JavaScript'], null],
       ['03', 'Probivochka / Fusion OSINT', 'Сбор и сопоставление открытой информации, граф связей и отчёты по результатам исследования.', ['PRIVATE', 'Python', 'OSINT'], null],
-      ['04', 'Winter Profile', 'Оформление этой страницы: зимний фон, движение за курсором и анимация при прокрутке.', ['PUBLIC', 'JavaScript', 'CSS'], SOURCE]
+      ['04', 'DeadCode', 'Чит для Rust. Приватная разработка.', ['PRIVATE', 'Rust game'], null],
+      ['05', 'Stealer', 'Утилита для скрытия от проверок на Majestic. Исходники закрыты.', ['PRIVATE', 'Majestic'], null],
+      ['06', 'Winter Profile', 'Оформление любого личного GitHub-профиля: свой фон, цвет, шрифт, снег и анимация.', ['PUBLIC', 'JavaScript', 'CSS'], SOURCE]
     ];
     const projectGrid = el('div', {class: 'project-grid'}, projects.map(([num, name, description, tags, href]) => el('article', {class: 'project-card'},
       el('div', {class: 'card-top'}, label(num), el('span', {'aria-hidden': 'true'}, href ? '↗' : '•')),
@@ -110,15 +120,35 @@
       el('p', {}, 'Работаем над общими задачами и собственными проектами. Реверс-инжиниринг и GEOINT веду со своей стороны.'),
       link('Наша общая страница ↗', SHARED, 'text-link'));
     stage.append(section('pc-team', '04 / TOGETHER', 'Совместная работа', team));
-    stage.append(el('footer', {class: 'footer'}, link('psichopodobny', BASE + 'psichopodobny'), el('span', {}, 'Winter Profile / 1.0'), link('Исходники ↗', SOURCE)));
+    stage.append(el('footer', {class: 'footer'}, link('psichopodobny', BASE + 'psichopodobny'), el('span', {}, 'Winter Profile / 1.1'), link('Исходники ↗', SOURCE)));
     frame.append(el('div', {class: 'layout ' + (route === 'duo' ? 'layout-duo' : '')}, identity, stage));
     function update(next) {
       preferences = next;
       frame.dataset.motion = String(next.motion);
       frame.dataset.snow = String(next.snow);
+      frame.dataset.background = next.background;
+      frame.style.setProperty('--accent',next.accent);
+      frame.style.setProperty('--profile-font',root.PCWinterOptions.fonts[next.font]);
+      const background = next.background === 'custom' && next.customBackground ? next.customBackground : asset(next.background === 'lake' ? 'media/winter-lake.png' : 'media/winter-forest.png');
+      if (backgroundImage.getAttribute('src') !== background) backgroundImage.setAttribute('src',background);
       frame.querySelectorAll('[data-pref]').forEach(node => node.setAttribute('aria-pressed', String(next[node.dataset.pref])));
     }
-    function activate(win) {
+    function refreshNative(main) {
+      if (!native || !nativeObserver) return;
+      main.querySelectorAll('.pinned-item-list-item, article.markdown-body h1, article.markdown-body h2, article.markdown-body h3').forEach(node => {
+        if (nativeItems.has(node)) return;
+        nativeItems.add(node); node.classList.add('pc-native-reveal'); nativeObserver.observe(node);
+      });
+    }
+    function destroy() { cleanups.splice(0).forEach(fn => fn()); }
+    function activate(win, main) {
+      if (native && win.IntersectionObserver) {
+        nativeObserver = new win.IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) {entry.target.classList.add('pc-native-visible');nativeObserver.unobserve(entry.target);}
+        }), {threshold:.03});
+        refreshNative(main);
+        cleanups.push(() => {nativeObserver.disconnect();nativeItems.forEach(node => node.classList.remove('pc-native-reveal','pc-native-visible'));});
+      }
       let scrollFrame = 0;
       const offset = () => {
         scrollFrame = 0;
@@ -174,7 +204,8 @@
         frame.removeEventListener('click', anchors);
       });
     }
-    return {element: frame, update, activate, destroy() { cleanups.splice(0).forEach(fn => fn()); }};
+    update(preferences);
+    return {element: frame, update, activate, destroy, refreshNative};
   }
   root.PCWinterView = {createView};
   if (typeof module !== 'undefined') module.exports = {createView};

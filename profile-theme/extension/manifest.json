@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "psichopodobny / Winter Profile",
-  "version": "1.0.0",
-  "description": "Зимнее оформление профиля psichopodobny и общей страницы с uikole.",
+  "name": "Winter Profile - GitHub Themes",
+  "version": "1.1.0",
+  "description": "Живой зимний фон, рамка аватара и оформление любого личного GitHub-профиля. Автор: psichopodobny.",
   "permissions": ["storage"],
   "icons": {"16": "media/icon-16.png", "48": "media/icon-48.png", "128": "media/icon-128.png"},
   "action": {"default_title": "Winter Profile", "default_popup": "popup.html"},
   "content_scripts": [{
-    "matches": ["https://github.com/psichopodobny", "https://github.com/psichopodobny/*", "https://github.com/psichopodobny?*"],
-    "js": ["scope.js", "view.js", "controller.js", "content.js"],
+    "matches": ["https://github.com/*"],
+    "js": ["options.js", "scope.js", "view.js", "controller.js", "content.js"],
     "css": ["host.css"],
     "run_at": "document_idle"
   }],

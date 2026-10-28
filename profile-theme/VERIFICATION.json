@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "browser": "151.0.7922.34",
   "checks": [
     "MV3 loads real content scripts, CSS and original 1080px portrait; native navigation remains visible",
@@ -7,17 +7,19 @@
     "native view restoration, popup controls and live storage preferences",
     "shared page has two readable names; original K-ON art remains in color",
     "SPA navigation, remount after main replacement, no duplicate theme roots",
-    "repository listings and the source repository remain untouched",
+    "repository pages and pages without the personal-profile marker remain untouched",
     "390px mobile layout has no horizontal overflow",
-    "system reduced-motion preference respected on first load"
+    "system reduced-motion preference respected on first load",
+    "generic profiles preserve native content, support presets/local uploads/accent/font/reset, and ignore non-profile pages"
   ],
   "pageErrors": [],
   "fixtureOnly": true,
-  "unitTests": 2,
+  "unitTests": 3,
   "livePublicPages": [
     {
       "page": "personal",
       "status": 200,
+      "mode": "on",
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
@@ -26,6 +28,25 @@
     {
       "page": "shared",
       "status": 200,
+      "mode": "on",
+      "inMain": true,
+      "cssLoaded": true,
+      "missingImages": [],
+      "mainTop": 72
+    },
+    {
+      "page": "octocat",
+      "status": 200,
+      "mode": "native",
+      "inMain": true,
+      "cssLoaded": true,
+      "missingImages": [],
+      "mainTop": 72
+    },
+    {
+      "page": "realtenzo",
+      "status": 200,
+      "mode": "native",
       "inMain": true,
       "cssLoaded": true,
       "missingImages": [],
