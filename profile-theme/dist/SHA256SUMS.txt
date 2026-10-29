@@ -1,5 +1,6 @@
 07b28d9413f571726d33bbf9b6514772ac2701974072e2f9cdaca6e2eb9f485c  WinterProfile-Setup.exe
 ac593e820be4d99427ea74e15ce2d7630e3d4a111d49374aac200483334b108e  psichopodobny-winter-firefox-v1.1.1-unsigned.zip
+1c93e2e64a9132b04535251e7bacf93d265d1f1bdcf87f2b491128a8a8dd053a  psichopodobny-winter-firefox-v1.2.0-source.zip
 4f4f933aecd4d4eb8e60c73d5d40ff3aaf57b7965ea57d7cb9fc627a028dfdfd  psichopodobny-winter-firefox-v1.2.0-unsigned.zip
 6a7d0bd1437745e91827c939ddccf9c52e6b40031b0d61d2218321b3994c79ff  psichopodobny-winter-v1.0.0.zip
 ff36092ef7a1319e9cae10d791528a1d12151e9daff2ceb50be9cee9fce1c4ce  psichopodobny-winter-v1.1.0.zip
