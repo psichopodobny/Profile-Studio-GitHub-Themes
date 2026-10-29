@@ -1,0 +1,14 @@
+.winter-view .portrait-ring::before{display:none}
+.winter-view .forest{filter:grayscale(1) brightness(calc(1 - var(--pc-dim,.55))) blur(var(--pc-blur,0px))}
+.winter-view[data-background="custom"] .forest{filter:brightness(calc(1 - var(--pc-dim,.55))) blur(var(--pc-blur,0px))}
+.winter-view[data-background="midnight"] .forest,.winter-view[data-background="neon"] .forest,.winter-view[data-background="aurora"] .forest,.winter-view[data-background="uikole"] .forest,.winter-view[data-background="ember"] .forest{display:none}
+.winter-view[data-background="midnight"] .backdrop{background:radial-gradient(ellipse at 80% 10%,#344461,transparent 60%),linear-gradient(135deg,#10131a,#0c1321)}
+.winter-view[data-background="neon"] .backdrop{background:radial-gradient(ellipse at 85% 10%,#573b8a,transparent 65%),radial-gradient(ellipse at 10% 85%,#145b6b,transparent 65%),#100d1c}
+.winter-view[data-background="aurora"] .backdrop{background:radial-gradient(ellipse at 10% 10%,#245e4c,transparent 65%),radial-gradient(ellipse at 85% 45%,#374a83,transparent 65%),#0b181d}
+.winter-view[data-background="uikole"] .backdrop{background:radial-gradient(ellipse at 90% 0%,#71445f,transparent 65%),radial-gradient(ellipse at 0% 85%,#7b583c,transparent 65%),#21151e}
+.winter-view[data-background="ember"] .backdrop{background:radial-gradient(ellipse at 0% 15%,#885638,transparent 60%),radial-gradient(ellipse at 95% 90%,#612637,transparent 65%),#1b1113}
+.winter-view:is([data-background="midnight"],[data-background="neon"],[data-background="aurora"],[data-background="uikole"],[data-background="ember"]) .backdrop{filter:brightness(calc(1 - var(--pc-dim,.55))) blur(var(--pc-blur,0px))}
+.winter-view .hero-copy,.winter-view .identity-copy,.winter-view .work-row h3,.winter-view .section-title h2{font-family:var(--pc-font,var(--profile-font,system-ui))}
+.winter-view .fog{background:radial-gradient(ellipse at 25% 65%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 48%),radial-gradient(ellipse at 80% 80%,color-mix(in srgb,var(--pc-secondary) 10%,transparent),transparent 48%)}
+html[data-pc-theme="native"] main[data-pc-native] .avatar-user.width-full{animation:none!important;outline:none;box-shadow:none}
+html[data-pc-theme="native"] main[data-pc-native] :is(.p-note,article.markdown-body,.pc-local-about){font-family:var(--pc-font)!important}

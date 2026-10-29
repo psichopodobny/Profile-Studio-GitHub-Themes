@@ -1,0 +1,14 @@
+{
+  "browser": "151.0.7922.34",
+  "publicPages": [
+    "https://github.com/octocat",
+    "https://github.com/psichopodobny/psichopodobny-and-uikole"
+  ],
+  "customFontLoadedWithGitHubCSP": true,
+  "nativeLoginPreserved": true,
+  "uikoleOriginalColorImage": {
+    "width": 1920,
+    "filter": "none"
+  },
+  "firefoxRuntimeTested": false
+}

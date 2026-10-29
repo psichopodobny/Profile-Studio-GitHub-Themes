@@ -1,0 +1,21 @@
+{
+  "format": "winter-profile-theme",
+  "version": 2,
+  "name": "Aurora",
+  "appearance": {
+    "motion": true,
+    "snow": true,
+    "background": "aurora",
+    "customBackground": "",
+    "accent": "#81e5bd",
+    "secondary": "#8daeff",
+    "font": "rounded",
+    "customFont": "",
+    "fontName": "",
+    "frame": "orbit",
+    "frameSpeed": 20,
+    "avatarShape": "circle",
+    "dim": 55,
+    "blur": 0
+  }
+}

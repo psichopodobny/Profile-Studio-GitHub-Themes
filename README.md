@@ -4,6 +4,8 @@
   <sub>Windows 10 / 11 · <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/WINDOWS.md">как работает помощник</a> · <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/dist/psichopodobny-winter-v1.2.0.zip">ZIP для Chrome / Edge</a></sub>
   <br>
   <a href="https://github.com/psichopodobny/psichopodobny/blob/main/profile-theme/FIREFOX.md"><sub>Firefox: ожидается публикация Mozilla ↗</sub></a>
+  <br>
+  <sub>Studio 1.3 preview: <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/studio/dist/WinterProfile-Studio-Preview.exe">EXE с редактором</a> · <a href="https://github.com/psichopodobny/psichopodobny/raw/refs/heads/main/profile-theme/studio/dist/winter-theme-collection-v1.3.0.zip">6 готовых тем</a></sub>
 </p>
 
 <div align="center">
@@ -20,6 +22,7 @@
 <p align="center">
   <a href="#проекты">проекты</a> &nbsp; / &nbsp;
   <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme">кастомный профиль ↗</a> &nbsp; / &nbsp;
+  <a href="https://github.com/psichopodobny/psichopodobny/tree/main/profile-theme/studio">Studio: редактор и 6 сборок тем ↗</a> &nbsp; / &nbsp;
   <a href="#инструменты-для-реверса">инструменты</a> &nbsp; / &nbsp;
   <a href="https://github.com/psichopodobny/psichopodobny-and-uikole">psichopodobny and uikole ↗</a>
 </p>

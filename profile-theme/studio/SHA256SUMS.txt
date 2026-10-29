@@ -1,0 +1,5 @@
+61278ed907faaea9967fe6c896420d48d8043a3e0a1120622ba7516d3656b9e4  dist/psichopodobny-winter-firefox-v1.3.0-source.zip
+79a59507ff36566566dc7aae3fb76088cf710af076fc0c9c8cca3f2cefda6744  dist/psichopodobny-winter-firefox-v1.3.0-unsigned.zip
+8ad1e59cc662e22a5f56f8c7efe10df7c09a623868068d0b5e975aca2872a8e0  dist/psichopodobny-winter-v1.3.0.zip
+8579b632c3fbc306546bec279e71b8b8206190aec799e847358f9b22577fc8af  dist/winter-theme-collection-v1.3.0.zip
+eac4cb853c47414fd1bb78c7296a891d16212c25792580efee05b7d1131f2eab  dist/WinterProfile-Studio-Preview.exe

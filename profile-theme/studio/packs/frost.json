@@ -1,0 +1,21 @@
+{
+  "format": "winter-profile-theme",
+  "version": 2,
+  "name": "Frost",
+  "appearance": {
+    "motion": true,
+    "snow": true,
+    "background": "forest",
+    "customBackground": "",
+    "accent": "#d5e3ec",
+    "secondary": "#ffffff",
+    "font": "mono",
+    "customFont": "",
+    "fontName": "",
+    "frame": "frost",
+    "frameSpeed": 14,
+    "avatarShape": "circle",
+    "dim": 55,
+    "blur": 0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "browser": "151.0.7922.34",
+  "checks": [
+    "all six packs import; v1 compatibility; rejects CSS/remote images/invalid fonts; personal content is profile-scoped and excluded from default exports",
+    "MV3 Studio saves presets, uploaded avatar and real TTF; local text uses textContent and native repository links remain intact",
+    "other profiles retain identities; custom owner view keeps original 1080px Arima; disabling restores original DOM, image attributes and removes frame",
+    "export omits avatar/text unless opted in; font round-trips; unsafe import leaves storage unchanged; profile reset restores originals",
+    "standalone file editor stores local draft; responsive mobile layout has no horizontal overflow; reduced-motion disables animations"
+  ],
+  "pageErrors": [],
+  "firefoxRuntimeTested": false,
+  "sourceReproduction": {
+    "files": 29,
+    "allBytesMatch": true
+  },
+  "frozenFirefox120": {
+    "psichopodobny-winter-firefox-v1.2.0-unsigned.zip": "4f4f933aecd4d4eb8e60c73d5d40ff3aaf57b7965ea57d7cb9fc627a028dfdfd",
+    "psichopodobny-winter-firefox-v1.2.0-source.zip": "1c93e2e64a9132b04535251e7bacf93d265d1f1bdcf87f2b491128a8a8dd053a"
+  },
+  "windowsSelfTestChecks": 27,
+  "firefoxSigned": false,
+  "windowsPublisherSigned": false
+}
