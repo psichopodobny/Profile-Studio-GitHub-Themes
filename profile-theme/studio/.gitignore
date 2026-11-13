@@ -1,0 +1,4 @@
+__pycache__/
+/dist/
+/test-results/*
+!/test-results/PUBLIC-VERIFICATION.json

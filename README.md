@@ -1,42 +1,32 @@
 # Profile Studio - GitHub Themes
 
-Редактор оформления GitHub-профилей от **psichopodobny и uikole**. Свои фоны, шрифты, аватары и анимированные рамки, готовые темы и обмен оформлением.
+Редактор GitHub-профилей от **psichopodobny и uikole**.
 
-![Редактор Profile Studio](profile-theme/studio/preview-studio.png)
+![Profile Studio 1.5.4](profile-theme/studio/preview-studio-1.5.4.png)
 
-[Скачать Windows EXE](https://github.com/psichopodobny/Profile-Studio-GitHub-Themes/raw/refs/heads/main/profile-theme/studio/dist/WinterProfile-Studio-Preview.exe) · [Все темы](https://github.com/psichopodobny/Profile-Studio-GitHub-Themes/raw/refs/heads/main/profile-theme/studio/dist/winter-theme-collection-v1.3.0.zip) · [Chrome / Edge](https://github.com/psichopodobny/Profile-Studio-GitHub-Themes/raw/refs/heads/main/profile-theme/studio/dist/psichopodobny-winter-v1.3.0.zip)
+**Исходники 1.5.4 обновлены 13 ноября 2026.** Два режима оформления, поиск настроек по Ctrl+K, сравнение «До / Сейчас», именованные сборки, плавный фон и независимые палитры профиля и редактора.
 
-## Готовая версия 1.3.0
+[Исходники редактора](profile-theme/studio/extension) · [Запуск и возможности](profile-theme/studio/README.md) · [Сборка и проверки](profile-theme/studio/README-BUILD.md) · [Установить Firefox-версию из Add-ons](https://addons.mozilla.org/firefox/addon/profile-github-/)
 
-- Шесть сборок: **Frost, Midnight, Neon, Aurora, uikole и Ember**.
-- Живой предпросмотр, локальные фоны и шрифты, два цвета и несколько режимов анимированной рамки.
-- Оформление для всех личных профилей или для отдельного ника.
-- Локальные аватар, отображаемое имя, описание и текст профиля.
-- Экспорт и импорт JSON: тему можно передать другому человеку и изменить под себя.
-- Возврат исходного вида при отключении. Учитывается уменьшение движения в настройках системы.
+## Оформление для всех и для расширения
 
-Изменения в 1.3 видны в браузере с расширением. Публичные данные аккаунтов и репозиториев не редактируются.
+**Обычный GitHub** собирает README: баннер, текст, значки и проекты. После публикации его видят все посетители GitHub.
 
-[Исходники расширения](profile-theme/studio/extension) · [Firefox-сборка](profile-theme/studio/firefox) · [Windows-помощник](profile-theme/studio/windows-helper) · [Темы](profile-theme/studio/packs) · [Инструкция](profile-theme/studio/README.md) · [Проверки](profile-theme/studio/VERIFICATION.json)
+**С расширением** меняет всю страницу: фон, отдельный аватар, анимированную рамку, курсор и эффекты. Такое оформление видят пользователи Profile Studio. Владелец может опубликовать тему в своём существующем репозитории, другие — использовать её и делать ремиксы с его разрешения. README для полной темы не требуется.
 
-## Firefox
+Настройки сохраняются локально. Расширение не просит GitHub-пароль или токен, не собирает аналитику и не публикует файлы автоматически. Темы владельцев включаются отдельно.
 
-Подготовленный пакет **1.3.0 пока не подписан Mozilla**. ZIP предназначен для отправки на проверку, а не для обычной постоянной установки.
+## Что нового
 
-[Firefox ZIP 1.3.0](https://github.com/psichopodobny/Profile-Studio-GitHub-Themes/raw/refs/heads/main/profile-theme/studio/dist/psichopodobny-winter-firefox-v1.3.0-unsigned.zip) · [Соответствующие исходники](https://github.com/psichopodobny/Profile-Studio-GitHub-Themes/raw/refs/heads/main/profile-theme/studio/dist/psichopodobny-winter-firefox-v1.3.0-source.zip) · [Поля для Mozilla](profile-theme/studio/FIREFOX-LISTING.md)
+- 20 тем профиля и 20 независимых палитр редактора.
+- HEX/RGB, насыщенность/яркость, вертикальная шкала тона и отмена выбора цвета.
+- Свой фон и курсор, загрузка шрифта, редактирование проектов и мини-профиля.
+- Сравнение вариантов без изменения черновика, поиск настроек и переименование сборок.
+- Детализированные эффекты и фон, привязанный к видимой области предпросмотра.
+- Проверка владельца опубликованной темы, каталог, импорт/экспорт и ремиксы.
 
-На скриншоте текущей отправки в Mozilla указана **1.2.0**. Для 1.3 используй «Загрузить новую версию» у того же дополнения и приложи оба файла 1.3. Изменение названия на странице не меняет версию внутри ZIP.
+Сборка из исходников: Python 3.10+, затем `python profile-theme/studio/build.py`. Открой `profile-theme/studio/extension/studio.html`. Новая 1.5.4 не отправлялась в Firefox Add-ons; подписанная версия в магазине обновляется отдельно после проверки.
 
-Для разработки доступна временная загрузка: распакуй Firefox ZIP, открой `about:debugging#/runtime/this-firefox`, нажми «Загрузить временное дополнение» и выбери `manifest.json`. Затем открой https://github.com/psichopodobny. Временная загрузка действует до перезапуска Firefox.
+Публичная коллекция включает собственные рамки и загрузку PNG/APNG. Оригинальные анимации Steam из локального сравнения в публичный набор не входят. [Права на материалы](profile-theme/studio/extension/ARTWORK.md) · [Приватность](profile-theme/studio/extension/PRIVACY.md) · [Фактические проверки](profile-theme/studio/test-results/PUBLIC-VERIFICATION.json).
 
-## Общая программа и сообщество
-
-Следующий этап - публикация владельцами своих профилей и тем, автоматический показ опубликованного оформления посетителям с расширением, галерея и создание своей версии чужой темы.
-
-**Это ещё не готово в версии 1.3.** Начальные модули сохранены отдельно в [community-draft](community-draft). Они не входят в рабочие ZIP и EXE. Пока темы передаются через JSON.
-
-## Сборка и права
-
-[Воспроизведение Firefox-сборки](profile-theme/studio/README-BUILD.md). Код распространяется по MIT; сторонние изображения сохраняют собственные права - см. [ARTWORK.md](profile-theme/studio/extension/ARTWORK.md).
-
-Исторические версии и материалы сохранены. [Прежний README профиля](docs/PERSONAL-PROFILE.md). Название репозитория - **Profile-Studio-GitHub-Themes**; отображаемое название проекта - **Profile Studio - GitHub Themes**. Имя внутри замороженных пакетов 1.3 остаётся Winter Profile Studio до следующей сборки.
+Пакеты EXE/ZIP 1.3 в старых каталогах сохранены как история и не являются версией 1.5.4. [Предыдущие материалы](docs/PERSONAL-PROFILE.md).

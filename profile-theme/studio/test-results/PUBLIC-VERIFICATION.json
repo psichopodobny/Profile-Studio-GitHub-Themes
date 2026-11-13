@@ -1,0 +1,30 @@
+{
+  "version": "1.5.4",
+  "date": "2026-11-13",
+  "distribution": "public_source_preview",
+  "referenceSteamBinariesIncluded": false,
+  "customPngApngImport": true,
+  "firefoxValidator": {
+    "errors": 0,
+    "notices": 0,
+    "warnings": 0
+  },
+  "checks": [
+    "Public editor, Ctrl+K, before/current comparison, named variants and personal draft persistence",
+    "Public frame gallery: six own designs initially visible, no empty Steam category",
+    "Two independent modes, README/SVG/GIF byte preservation, palette cancel and mobile",
+    "Actual isolated Edge MV3 and Firefox160: native theming, packaged WebP background and restoration",
+    "Owner themes tested with controlled HTTPS fixtures, not public account changes"
+  ],
+  "byteIdenticalSourceRebuild": {
+    "chromium": "16c9de300404004a268a35575bdb45cd356a1ab367fd5d9987267a388d8d8383",
+    "firefox-unsigned": "c952e70d7af44c182c7c5f31c383692a69b3b75fe30ee484b7d1782d72cdbd08",
+    "html": "16c9de300404004a268a35575bdb45cd356a1ab367fd5d9987267a388d8d8383",
+    "source": "02ef71160878d250b6fcb8bc6a80481e4edc7f03e3ff41f40038a0e81fd00f3c"
+  },
+  "firefoxOnlineConsentGranted": false,
+  "remainingCheck": "Firefox owner fetch after real browsingActivity consent is not exercised",
+  "mozillaUploaded": false,
+  "edgeUploaded": false,
+  "chromeUploaded": false
+}

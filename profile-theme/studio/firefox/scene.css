@@ -1,0 +1,283 @@
+.ps-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+  isolation: isolate;
+}
+.ps-cursor-trail {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 2147483645;
+  pointer-events: none;
+}
+.ps-cursor-trail[hidden] {
+  display: none !important;
+}
+[data-ps-cursor]:not([data-ps-cursor="system"]),
+[data-ps-cursor]:not([data-ps-cursor="system"]) * {
+  cursor: var(--ps-custom-cursor, auto) !important;
+}
+.ps-scene-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+}
+.ps-scene-viewport {
+  position: sticky;
+  top: 0;
+  inset-inline: auto;
+  border-radius: 0;
+}
+.ps-scene-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  inset: 0;
+  will-change: transform;
+}
+.ps-scene-shade,
+.ps-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ps-scene-image[hidden] {
+  display: none;
+}
+.ps-cursor,
+.ps-cursor-tail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+}
+.ps-cursor::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--cursor-size) / -2);
+  top: calc(var(--cursor-size) / -2);
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border: 1.5px solid var(--cursor-color);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.ps-cursor[data-kind="dot"]::after {
+  background: var(--cursor-color);
+  width: 7px;
+  height: 7px;
+  left: -3.5px;
+  top: -3.5px;
+  border: 0;
+}
+.ps-cursor[data-kind="glow"]::after {
+  background: color-mix(in srgb, var(--cursor-color) 15%, transparent);
+  box-shadow:
+    0 0 24px var(--cursor-color),
+    inset 0 0 12px var(--cursor-color);
+}
+.ps-cursor[data-kind="crosshair"]::after {
+  border-radius: 0;
+  border: 0;
+  background:
+    linear-gradient(var(--cursor-color), var(--cursor-color)) center/1px 100%
+      no-repeat,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) center/100% 1px
+      no-repeat;
+}
+.ps-cursor-tail {
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  opacity: 0.35;
+}
+.ps-cursor[hidden],
+.ps-cursor-tail[hidden] {
+  display: none;
+}
+.ps-avatar-frame[data-art="true"] {
+  overflow: visible;
+  padding: 0;
+  border: 0;
+}
+.ps-avatar-frame[data-art="true"]::before {
+  display: none;
+}
+.ps-avatar-frame[data-art="true"] img {
+  outline: none;
+}
+.ps-frame-art {
+  position: absolute;
+  inset: -12%;
+  width: 124%;
+  height: 124%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+  transform: scale(var(--ps-frame-scale, 1));
+  transform-origin: 50% 50%;
+  opacity: var(--ps-art-opacity, 0.85);
+  filter: var(--ps-frame-filter, drop-shadow(0 0 2px #ffffff38));
+}
+.ps-frame-art path {
+  vector-effect: non-scaling-stroke;
+}
+.ps-frame-art .frame-orbit > path,
+.ps-frame-art .frame-reverse > path {
+  animation: ps-frame-flow var(--ps-frame-speed, 12s) linear infinite;
+}
+.ps-frame-art .frame-tech-flow {
+  animation: ps-frame-flow var(--ps-frame-speed, 12s) linear infinite;
+}
+.ps-frame-art[data-paused="true"] * {
+  animation-play-state: paused !important;
+}
+.ps-frame-art .frame-reverse > path {
+  animation-direction: reverse;
+  animation-duration: calc(var(--ps-frame-speed, 12s) * 1.4);
+}
+.ps-frame-art .frame-glint,
+.ps-frame-art .frame-laurel {
+  animation: ps-frame-shimmer 3.7s ease-in-out var(--phase, 0s) infinite;
+}
+.ps-frame-art .frame-neon-halo {
+  opacity: calc(var(--ps-frame-halo, 0.5) * 0.55);
+}
+.ps-frame-art .frame-spark {
+  animation: ps-frame-shimmer 1.9s ease-in-out var(--phase, 0s) infinite;
+}
+[data-motion="false"] .ps-frame-art *,
+[data-ps-motion="false"] .ps-frame-art * {
+  animation: none !important;
+}
+@keyframes ps-frame-flow {
+  to {
+    stroke-dashoffset: calc(var(--frame-lap) * -1px);
+  }
+}
+@keyframes ps-frame-shimmer {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-frame-art * {
+    animation: none !important;
+  }
+}
+[data-ps-cursor]:not([data-ps-cursor="system"]):not([data-ps-cursor="custom"]),
+[data-ps-cursor]:not([data-ps-cursor="system"]):not([data-ps-cursor="custom"])
+  * {
+  cursor: var(--ps-custom-cursor, auto) !important;
+}
+[data-ps-cursor="custom"],
+[data-ps-cursor="custom"] * {
+  cursor: var(--ps-custom-cursor, auto) !important;
+}
+.ps-avatar-frame {
+  position: relative;
+  padding: var(--ps-frame-width, 2px);
+  border-radius: 50%;
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow: 0 0 var(--ps-frame-glow, 10px)
+    color-mix(in srgb, var(--ps-accent) 25%, transparent);
+}
+.ps-avatar-frame::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: conic-gradient(
+    transparent,
+    var(--ps-accent),
+    var(--ps-secondary),
+    transparent 65%
+  );
+  animation: ps-orbit var(--ps-frame-speed, 12s) linear infinite;
+  z-index: -1;
+}
+.ps-avatar-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  background: #131924;
+}
+.ps-avatar-frame[data-frame="none"] {
+  padding: 0;
+  box-shadow: none;
+}
+.ps-avatar-frame[data-frame="none"]::before {
+  display: none;
+}
+.ps-avatar-frame[data-frame="neon"]::before {
+  background: conic-gradient(
+    var(--ps-accent),
+    var(--ps-secondary),
+    var(--ps-accent)
+  );
+}
+.ps-avatar-frame[data-frame="pulse"]::before {
+  animation: ps-pulse var(--ps-frame-speed) ease-in-out infinite;
+  background: var(--ps-accent);
+}
+.ps-avatar-frame[data-frame="double"]::before {
+  background: var(--ps-accent);
+  animation: none;
+}
+.ps-avatar-frame[data-frame="double"] img {
+  outline: 1px solid var(--ps-secondary);
+  outline-offset: -7px;
+}
+.ps-avatar-frame[data-frame="dashed"] {
+  border: 2px dashed var(--ps-accent);
+  padding: 4px;
+}
+.ps-avatar-frame[data-frame="dashed"]::before {
+  display: none;
+}
+[data-ps-motion="false"] .ps-avatar-frame::before {
+  animation: none;
+}
+@keyframes ps-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ps-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-avatar-frame::before {
+    animation: none !important;
+  }
+}
+.ps-cursor[data-kind="custom"]::after {
+  border: 0;
+  border-radius: 0;
+  background: var(--cursor-image) center/contain no-repeat;
+}
+[data-ps-cursor="custom"],
+[data-ps-cursor="custom"] * {
+  cursor: var(--ps-custom-cursor, auto) !important;
+}

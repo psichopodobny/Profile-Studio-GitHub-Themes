@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" data-studio-icon href="media/icon-48.png" />
+    <title>Profile Studio - темы сообщества</title>
+    <link rel="stylesheet" href="studio.css" />
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <body>
+    <header class="gallery-top">
+      <a class="brand" href="studio.html"
+        ><img
+          class="brand-logo"
+          src="media/icon-128.png"
+          alt=""
+          width="36"
+          height="36"
+        />
+        <span>Profile <b>Studio</b><small>GITHUB THEMES</small></span></a
+      ><a href="studio.html" class="button secondary">Вернуться в редактор ↗</a>
+    </header>
+    <main class="gallery-main">
+      <span class="eyebrow">MAKE IT YOURS</span>
+      <h1>Хорошая тема -<br /><em>только начало.</em></h1>
+      <p class="gallery-intro">
+        Выбирай основу, меняй детали и делись своим вариантом. Свои темы
+        публикуют сами владельцы профилей.
+      </p>
+      <div class="gallery-controls">
+        <button id="load-community" class="button primary">
+          Загрузить темы сообщества</button
+        ><input
+          id="owner"
+          placeholder="GitHub-ник автора"
+          maxlength="39"
+          aria-label="GitHub-ник автора"
+        /><button id="load-owner" class="button secondary">Найти тему ↗</button>
+      </div>
+      <p class="footnote" id="network-note">
+        Локальная коллекция работает без сети. Онлайн-каталог использует
+        публичный API GitHub и файлы авторов, без входа в аккаунт.
+      </p>
+      <p id="gallery-status" role="status" aria-live="polite"></p>
+      <h2>От сообщества<span id="community-count">ПОКА НЕ ЗАГРУЖЕНО</span></h2>
+      <div id="community" class="gallery-grid">
+        <div class="empty-state">
+          Нажми «Загрузить темы сообщества» или найди тему по нику владельца.
+        </div>
+      </div>
+      <h2>Коллекция Studio<span>20 ГОТОВЫХ ОСНОВ</span></h2>
+      <div id="built-in" class="gallery-grid"></div>
+      <section class="publish-card">
+        <div>
+          <span class="eyebrow">SHARE YOUR SPACE</span>
+          <h2>Тема, которую хочется забрать.</h2>
+          <p>
+            В редакторе скачай файл для публикации и положи его в свой
+            репозиторий username/username. Для каталога можно подготовить
+            заявку, а затем отправить её на GitHub самостоятельно.
+          </p>
+        </div>
+        <form id="suggest-form">
+          <label class="field"
+            >Твой GitHub-ник<input
+              id="suggest-owner"
+              maxlength="39"
+              required /></label
+          ><label class="field"
+            >Название темы<input
+              id="suggest-name"
+              maxlength="80"
+              required /></label
+          ><label class="field"
+            >Короткое описание<textarea
+              id="suggest-description"
+              maxlength="240"
+            ></textarea></label
+          ><button class="button secondary wide" type="submit">
+            Подготовить заявку на GitHub ↗
+          </button>
+          <p class="footnote">
+            Откроется черновик issue. Ничего не отправляется автоматически.
+          </p>
+        </form>
+      </section>
+    </main>
+    <script src="branding.js"></script>
+    <script src="options.js"></script>
+    <script src="asset-data.js"></script>
+    <script src="backgrounds.js"></script>
+    <script src="presets.js"></script>
+    <script src="sharing.js"></script>
+    <script src="consent.js"></script>
+    <script src="gallery.js"></script>
+  </body>
+</html>

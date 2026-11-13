@@ -1,0 +1,1 @@
+two-frame.gif is an original 1x1 black/white looping GIF fixture (two80ms frames), generated directly from the GIF container and LZW codes. MIT project test data. Used to ensure banner upload/download preserves the entire original GIF rather than re-encoding a static frame.

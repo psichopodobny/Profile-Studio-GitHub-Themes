@@ -1,0 +1,3 @@
+# Preserve the reviewed source, font-license and generated asset bytes on checkout.
+profile-theme/studio/** -text
+README.md -text

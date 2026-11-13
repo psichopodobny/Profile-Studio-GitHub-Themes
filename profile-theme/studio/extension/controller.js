@@ -1,112 +1,224 @@
 (function (root) {
-  'use strict';
-  function start({window: win, document: doc, storage, asset, routeFor, createView}) {
-    const media = win.matchMedia('(prefers-reduced-motion: reduce)');
-    const options = root.PCWinterOptions;
-    let state = options.normalizeState({}, !media.matches);
-    const login = () => options.loginFor(win.location.pathname.split('/')[1]);
-    let preferences = options.effective(state,login(),!media.matches);
-    let ready = false, disposed = false, scheduled = false, mounting = false, current = null;
-    const listeners = ['turbo:load', 'turbo:render', 'pjax:end', 'popstate'];
-    function unmount() {
+  "use strict";
+  function start({
+    window: win,
+    document: doc,
+    storage,
+    asset,
+    routeFor,
+    send,
+  }) {
+    const o = root.PCWinterOptions,
+      reduce = win.matchMedia("(prefers-reduced-motion: reduce)");
+    let state = o.normalizeState(),
+      ready = false,
+      dead = false,
+      current = null,
+      routeKey = "",
+      requestId = 0,
+      published = null,
+      publishedRef = null,
+      scheduled = 0,
+      reveal = null;
+    const login = () => o.loginFor(win.location.pathname.split("/")[1]);
+    function clear() {
       if (current) {
-        current.effects?.destroy();
+        for (const n of current.main.querySelectorAll(
+          ".ps-native-reveal,.ps-native-visible",
+        ))
+          n.classList.remove("ps-native-reveal", "ps-native-visible");
+        current.effects.destroy();
+        current.components.destroy();
+        current.scene.destroy();
         current.view.destroy();
-        current.root.remove();
-        current.main.removeAttribute('data-pc-main');
-        current.main.removeAttribute('data-pc-native');
-        current.main.removeAttribute('data-pc-motion');
-        current.main.style.removeProperty('--pc-accent');
-        current.main.style.removeProperty('--pc-font');
+        for (const key of [
+          "pcNative",
+          "pcMotion",
+          "psHideStats",
+          "psHideReadme",
+          "psHideContributions",
+        ])
+          delete current.main.dataset[key];
+        for (const name of ["--pc-accent", "--pc-font", "--pc-secondary"])
+          current.main.style.removeProperty(name);
         current = null;
       }
-      doc.documentElement.removeAttribute('data-pc-theme');
-    }
-    async function preference(key, value) {
-      if (!options.keys.includes(key)) return;
-      const name = login();
-      const target = name && Object.hasOwn(state.profiles,name) ? name : null;
-      const changes = key === 'enabled' ? {enabled:value} : options.appearanceChanges(state,target,{[key]:value});
-      state = options.normalizeState({...state,...changes},!media.matches);
-      preferences = options.effective(state,name,!media.matches);
-      sync();
-      try { await storage.set(changes); } catch { /* Current tab still responds when extension storage is unavailable. */ }
-    }
-    function sync() {
-      if (disposed || !ready || mounting) return;
-      preferences = options.effective(state,login(),!media.matches);
-      const route = routeFor(win.location.href);
-      const main = doc.querySelector('main') || doc.querySelector('[role="main"]');
-      const native = route === 'profile';
-      const profileLogin = win.location.pathname.split('/')[1];
-      if (!preferences.enabled || !route || !main || (native && !main.querySelector('.vcard-names .p-nickname, .vcard-names .vcard-username'))) { unmount(); return; }
-      const styleNative = () => {
-        if (!native) return;
-        main.style.setProperty('--pc-accent', preferences.accent);
-        main.style.setProperty('--pc-font', options.fonts[preferences.font]);
-        main.setAttribute('data-pc-motion', String(preferences.motion));
-      };
-      if (current && current.route === route && current.profileLogin === profileLogin && current.main === main && current.root.isConnected) {
-        current.view.update(preferences);
-        styleNative();
-        current.view.refreshNative?.(main);
-        current.effects?.update(preferences);
-        return;
-      }
-      unmount();
-      mounting = true;
-      let host, view;
-      try {
-        host = doc.createElement('div'); host.id = 'pc-theme-root';
-        const shadow = host.attachShadow({mode: 'open'});
-        const style = doc.createElement('link'); style.rel = 'stylesheet'; style.href = asset('theme.css');
-        view = createView({document: doc, asset, route, preferences, onPreference: preference, onExit: () => preference('enabled', false), profileLogin: win.location.pathname.split('/')[1]});
-        shadow.append(style, view.element);
-        main.prepend(host);
-        view.activate(win, main);
-        const effects = root.PCWinterEffects?.create({document:doc,main,view:view.element,native,route});
-        effects?.update(preferences);
-        current = {root: host, main, view, effects, route, profileLogin};
-        main.setAttribute(native ? 'data-pc-native' : 'data-pc-main', '');
-        styleNative();
-        doc.documentElement.setAttribute('data-pc-theme', native ? 'native' : 'on');
-      } catch (error) {
-        if (view) view.destroy();
-        if (host) host.remove();
-        main.removeAttribute('data-pc-main');
-        doc.documentElement.removeAttribute('data-pc-theme');
-        console.warn('Winter Profile: не удалось открыть оформление.', error);
-      } finally { mounting = false; }
+      reveal?.disconnect();
+      reveal = null;
+      doc.documentElement.removeAttribute("data-pc-theme");
     }
     function schedule() {
-      if (scheduled || disposed) return;
-      scheduled = true;
-      win.queueMicrotask(() => { scheduled = false; sync(); });
+      if (!scheduled && !dead)
+        scheduled = win.requestAnimationFrame(() => {
+          scheduled = 0;
+          sync();
+        });
     }
-    const observer = new win.MutationObserver(records => {
-      if (records.some(record => record.type === 'childList')) schedule();
+    function lookup(key, name) {
+      const id = ++requestId;
+      published = null;
+      publishedRef = null;
+      if (!state.enabled || !state.showPublished) return;
+      send({ type: "studio-owner-theme", owner: name })
+        .then((result) => {
+          if (dead || id !== requestId || routeKey !== key) return;
+          published = result?.ok ? result.theme : null;
+          publishedRef = result?.ok ? result.ref : null;
+          schedule();
+        })
+        .catch(() => {});
+    }
+    function sync() {
+      if (!ready || dead) return;
+      const name = login(),
+        route = routeFor(win.location.href),
+        key = route ? name : "";
+      if (routeKey !== key) {
+        clear();
+        routeKey = key;
+        ++requestId;
+        if (key) lookup(key, name);
+      }
+      const main =
+        doc.querySelector("main") || doc.querySelector('[role="main"]');
+      if (
+        !state.enabled ||
+        !route ||
+        !main ||
+        !main.querySelector(
+          ".vcard-names .p-nickname, .vcard-names .vcard-username",
+        )
+      ) {
+        clear();
+        return;
+      }
+      const hasLocal = Object.hasOwn(state.profiles, name),
+        source = hasLocal
+          ? "local"
+          : published
+            ? "published"
+            : state.styleUnpublished
+              ? "fallback"
+              : null;
+      if (!source) {
+        clear();
+        return;
+      }
+      let prefs =
+        source === "published"
+          ? o.normalize({ ...o.defaults, ...published.theme.appearance })
+          : o.effective(state, name);
+      prefs.motion = prefs.motion && !reduce.matches;
+      if (!current || current.main !== main) {
+        clear();
+        main.dataset.pcNative = "";
+        doc.documentElement.dataset.pcTheme = "native";
+        const scene = PCStudioScene.create({
+            target: main,
+            asset,
+            fixed: true,
+          }),
+          effects = PCWinterEffects.create({
+            document: doc,
+            main,
+            view: null,
+            native: true,
+            route: "profile",
+          }),
+          view = PCWinterView.createView({
+            document: doc,
+            onOpen: () => send({ type: "studio-open" }),
+            onRemix: () =>
+              send({ type: "studio-open", remix: true, ref: publishedRef }),
+            onGallery: () => send({ type: "studio-open", gallery: true }),
+          });
+        (main.querySelector(".Layout-main") || main).prepend(view.element);
+        const components = PCStudioComponents.native({
+          main,
+          asset,
+          login: name,
+        });
+        current = { main, scene, effects, view, source, components };
+        reveal = new win.IntersectionObserver(
+          (entries) => {
+            for (const e of entries)
+              if (e.isIntersecting) e.target.classList.add("ps-native-visible");
+          },
+          { threshold: 0.06 },
+        );
+      }
+      doc.documentElement.dataset.pcTheme = "native";
+      main.dataset.pcMotion = String(prefs.motion);
+      main.dataset.psHideStats = String(prefs.hideStats);
+      main.dataset.psHideReadme = String(prefs.hideReadme);
+      main.dataset.psHideContributions = String(prefs.hideContributions);
+      main.style.setProperty("--pc-accent", prefs.accent);
+      current.scene.update(prefs);
+      current.effects.update(prefs);
+      current.components.update(prefs);
+      current.view.update({ source, allowRemix: published?.allowRemix });
+      for (const n of main.querySelectorAll(
+        ".pinned-item-list-item,.js-yearly-contributions,article.markdown-body",
+      )) {
+        if (prefs.reveal && prefs.motion) {
+          n.classList.add("ps-native-reveal");
+          reveal.observe(n);
+        } else n.classList.remove("ps-native-reveal", "ps-native-visible");
+      }
+    }
+    const observer = new win.MutationObserver((mutations) => {
+      if (
+        mutations.some((m) => {
+          const n = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+          return (
+            n &&
+            !n.closest(
+              "#pc-theme-root,.ps-scene,.pc-avatar-frame,.ps-cursor,.ps-cursor-tail,.ps-cursor-trail,[data-ps-component]",
+            )
+          );
+        })
+      )
+        schedule();
     });
-    observer.observe(doc.documentElement, {childList: true, subtree: true});
-    listeners.forEach(name => win.addEventListener(name, schedule));
-    const stopStorage = storage.subscribe(changes => {
-      state = options.normalizeState({...state, ...changes}, !media.matches);
+    observer.observe(doc.documentElement, { childList: true, subtree: true });
+    const events = ["turbo:load", "turbo:render", "pjax:end", "popstate"];
+    events.forEach((e) => win.addEventListener(e, schedule));
+    reduce.addEventListener("change", schedule);
+    const unsubscribe = storage.subscribe((changes) => {
+      const networkChange =
+        Object.hasOwn(changes, "showPublished") ||
+        Object.hasOwn(changes, "enabled");
+      state = o.normalizeState({ ...state, ...changes });
+      if (networkChange) {
+        published = null;
+        ++requestId;
+        if (routeKey) lookup(routeKey, login());
+      }
       schedule();
     });
-    const loaded = (async () => {
-      try {
-        const saved = await storage.get(options.storageKeys);
-        state = options.normalizeState(saved, !media.matches);
-      } catch { /* Defaults are intentionally usable without saved preferences. */ }
-      ready = true;
-      sync();
-    })();
-    return {loaded, sync, stop() {
-      disposed = true; observer.disconnect();
-      listeners.forEach(name => win.removeEventListener(name, schedule));
-      if (stopStorage) stopStorage();
-      unmount();
-    }};
+    storage
+      .get(o.storageKeys)
+      .then((v) => {
+        state = o.normalizeState(v);
+        ready = true;
+        schedule();
+      })
+      .catch(() => {
+        ready = true;
+        schedule();
+      });
+    return {
+      destroy() {
+        dead = true;
+        ++requestId;
+        if (scheduled) win.cancelAnimationFrame(scheduled);
+        observer.disconnect();
+        unsubscribe();
+        events.forEach((e) => win.removeEventListener(e, schedule));
+        reduce.removeEventListener("change", schedule);
+        clear();
+      },
+    };
   }
-  root.PCWinterController = {start};
-  if (typeof module !== 'undefined') module.exports = {start};
+  root.PCWinterController = { start };
 })(globalThis);
